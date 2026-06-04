@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>007 First Light 攻略站</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: #7A6128;
+    --black: #080808;
+    --dark: #111010;
+    --card: #161514;
+    --border: #2A2520;
+    --text: #D4C9B8;
+    --muted: #6B6057;
+    --white: #F5EFE4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-badge {
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0;
+  }
+
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  nav { display: flex; gap: 2px; flex: 1; }
+
+  nav a {
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  nav a:hover, nav a.active { color: var(--gold); }
+  nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 14px; right: 14px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .header-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    width: 220px;
+  }
+
+  .header-search svg { color: var(--muted); flex-shrink: 0; }
+
+  .header-search input {
+    background: none;
+    border: none;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    width: 100%;
+  }
+
+  .header-search input::placeholder { color: var(--muted); }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 70% 40%, rgba(201,168,76,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 80% at 20% 80%, rgba(0,0,0,0.8) 0%, transparent 70%),
+      linear-gradient(160deg, #0d0b09 0%, #080808 100%);
+  }
+
+  /* Decorative grid */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+  }
+
+  /* Decorative circle */
+  .hero-ring {
+    position: absolute;
+    right: 8%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.12);
+    box-shadow: 0 0 80px rgba(201,168,76,0.06), inset 0 0 80px rgba(201,168,76,0.03);
+  }
+
+  .hero-ring::before {
+    content: '';
+    position: absolute;
+    inset: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.08);
+  }
+
+  .hero-ring::after {
+    content: '007';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 700;
+    color: rgba(201,168,76,0.15);
+    letter-spacing: -0.02em;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 80px 32px 64px;
+    width: 100%;
+  }
+
+  .hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .hero-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 6vw, 80px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 560px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 span { color: var(--gold); }
+
+  .hero p {
+    max-width: 460px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 36px;
+  }
+
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold);
+    color: var(--black);
+    padding: 12px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--text);
+    padding: 12px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-outline:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-item { }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+  .stat-label {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 72px 32px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 36px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: -0.01em;
+  }
+
+  .section-title span { color: var(--gold); }
+
+  .section-link {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+
+  .section-link:hover { color: var(--gold); }
+
+  /* divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ─── QUICK NAV ─── */
+  .quick-nav {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .quick-nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .quick-nav-inner::-webkit-scrollbar { display: none; }
+
+  .qnav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 20px 28px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-decoration: none;
+    color: var(--muted);
+  }
+
+  .qnav-item:hover, .qnav-item.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  .qnav-icon { font-size: 20px; }
+  .qnav-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ─── MISSION CARDS ─── */
+  .mission-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .mission-card {
+    background: var(--card);
+    padding: 28px;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mission-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: transparent;
+    transition: background 0.2s;
+  }
+
+  .mission-card:hover { background: #1a1815; }
+  .mission-card:hover::before { background: var(--gold); }
+
+  .mission-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .mission-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .mission-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .mission-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .tag.stealth { border-color: #2a3a2a; color: #6aaa6a; }
+  .tag.action  { border-color: #3a2a2a; color: #c07070; }
+  .tag.story   { border-color: #2a2a3a; color: #7070c0; }
+
+  .mission-diff {
+    position: absolute;
+    top: 20px; right: 20px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  /* ─── TIPS ─── */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .tip-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+
+  .tip-card:hover { border-color: var(--gold-dim); }
+
+  .tip-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .tip-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .tip-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  /* ─── FEATURED ─── */
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .featured-main {
+    background: var(--card);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .featured-main::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle at bottom right, rgba(201,168,76,0.06), transparent);
+  }
+
+  .featured-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .featured-side-item {
+    background: var(--card);
+    padding: 24px;
+    flex: 1;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+
+  .featured-side-item:hover { background: #1a1815; }
+
+  .featured-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .featured-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .featured-side-item .featured-title { font-size: 18px; }
+
+  .featured-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 20px;
+  }
+
+  .featured-meta span { display: flex; align-items: center; gap: 4px; }
+
+  /* ─── SEARCH OVERLAY ─── */
+  #search-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(8,8,8,0.95);
+    z-index: 1000;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 120px;
+  }
+
+  #search-overlay.open { display: flex; }
+
+  .search-box {
+    width: 100%;
+    max-width: 620px;
+    padding: 0 24px;
+  }
+
+  .search-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--gold-dim);
+    padding-bottom: 12px;
+    margin-bottom: 32px;
+  }
+
+  .search-input-wrap input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    color: var(--white);
+  }
+
+  .search-input-wrap input::placeholder { color: var(--muted); }
+
+  .search-results-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .search-result-item {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: color 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .search-result-item:hover .sr-name { color: var(--gold); }
+
+  .sr-icon { color: var(--gold-dim); font-size: 14px; }
+  .sr-name { font-size: 15px; color: var(--text); }
+  .sr-type { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-left: auto; }
+
+  .search-close {
+    position: absolute;
+    top: 32px; right: 32px;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 36px; height: 36px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .search-close:hover { color: var(--gold); border-color: var(--gold-dim); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-note { font-size: 12px; color: var(--muted); }
+  .footer-note a { color: var(--gold-dim); text-decoration: none; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-label { animation: fadeUp 0.6s ease both; }
+  .hero h1    { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero p     { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-ctas  { animation: fadeUp 0.6s 0.3s ease both; }
+  .hero-stats { animation: fadeUp 0.6s 0.4s ease both; }
+
+  @keyframes pulse-ring {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+  .hero-ring { animation: pulse-ring 4s ease-in-out infinite; }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: var(--gold);
+    z-index: 200;
+    transition: width 0.1s;
+    width: 0%;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-badge">007</div>
+      <span class="logo-text">First Light · 攻略站</span>
+    </a>
+    <nav>
+      <a href="#missions" class="active">任务攻略</a>
+      <a href="#tips">实战技巧</a>
+      <a href="#weapons">武器道具</a>
+      <a href="#trophies">成就奖杯</a>
+      <a href="#story">剧情档案</a>
+    </nav>
+    <div class="header-search" onclick="openSearch()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" placeholder="搜索攻略 / 关卡 / 成就…" readonly>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-content">
+    <div class="hero-label">IO Interactive · 2026</div>
+    <h1>007<br><span>First Light</span><br>全攻略</h1>
+    <p>从菜鸟特工到获得杀人执照 —— 任务流程、隐藏成就、全收集品一站搞定。</p>
+    <div class="hero-ctas">
+      <a href="#missions" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+        开始攻略
+      </a>
+      <a href="#tips" class="btn-outline">新手入门指南</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">16</div>
+        <div class="stat-label">主线任务</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">48</div>
+        <div class="stat-label">隐藏成就</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">21h</div>
+        <div class="stat-label">平均通关时长</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">全中文</div>
+        <div class="stat-label">图文双语</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK NAV -->
+<div class="quick-nav">
+  <div class="quick-nav-inner">
+    <a href="#" class="qnav-item active">
+      <span class="qnav-icon">🗺️</span>
+      <span class="qnav-label">全关卡</span>
+    </a>
+    <a href="#" class="qnav-item">
+      <span class="qnav-icon">👤</span>
+      <span class="qnav-label">潜行路线</span>
+    </a>
+    <a href="#" class="qnav-item">
+      <span class="qnav-icon">💥</span>
+      <span class="qnav-label">强攻打法</span>
+    </a>
+    <a href="#" class="qnav-item">
+      <span class="qnav-icon">🏆</span>
+      <span class="qnav-label">白金攻略</span>
+    </a>
+    <a href="#" class="qnav-item">
+      <span class="qnav-icon">🔫</span>
+      <span class="qnav-label">武器推荐</span>
+    </a>
+    <a href="#" class="qnav-item">
+      <span class="qnav-icon">🔧</span>
+      <span class="qnav-label">道具解锁</span>
+    </a>
+    <a href="#" class="qnav-item">
+      <span class="qnav-icon">👾</span>
+      <span class="qnav-label">Boss 战</span>
+    </a>
+    <a href="#" class="qnav-item">
+      <span class="qnav-icon">📦</span>
+      <span class="qnav-label">收集品</span>
+    </a>
+  </div>
+</div>
+
+<!-- FEATURED -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">精选 <span>攻略</span></h2>
+    <a href="#" class="section-link">查看全部 →</a>
+  </div>
+  <div class="featured-grid">
+    <div class="featured-main">
+      <div class="featured-label">主线攻略 · 强推</div>
+      <div class="featured-title">第一章「马耳他训练场」<br>全流程图文攻略</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.8;max-width:400px;margin-top:12px;">
+        从直升机坠毁到通过MI6招募测试，手把手带你完成游戏开场。涵盖格斗教学、驾驶测试、潜行绕行路线三套方案。
+      </p>
+      <div class="featured-meta">
+        <span>🕐 阅读约 8 分钟</span>
+        <span>👁 12,400 次浏览</span>
+        <span style="color:var(--gold)">★ 推荐</span>
+      </div>
+    </div>
+    <div class="featured-side">
+      <a href="#" class="featured-side-item">
+        <div class="featured-label">Boss 战</div>
+        <div class="featured-title">叛变特工 009<br>终章对决攻略</div>
+        <div class="featured-meta" style="margin-top:12px">
+          <span>🕐 5 分钟</span>
+          <span>👁 9,200</span>
+        </div>
+      </a>
+      <a href="#" class="featured-side-item">
+        <div class="featured-label">成就</div>
+        <div class="featured-title">「影子特工」隐藏成就<br>不惊动任何人全流程</div>
+        <div class="featured-meta" style="margin-top:12px">
+          <span>🕐 12 分钟</span>
+          <span>👁 7,600</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- MISSIONS -->
+<div class="section" id="missions">
+  <div class="section-header">
+    <h2 class="section-title">任务 <span>攻略</span></h2>
+    <a href="#" class="section-link">全部 16 关 →</a>
+  </div>
+  <div class="mission-grid">
+
+    <a href="#" class="mission-card">
+      <div class="mission-num">任务 01</div>
+      <div class="mission-diff">★★☆</div>
+      <div class="mission-name">蓝色多瑙河</div>
+      <div class="mission-desc">邦德于海军演习中遭遇意外，被MI6特招入队，首次踏上情报任务。</div>
+      <div class="mission-tags">
+        <span class="tag story">剧情</span>
+        <span class="tag stealth">潜行</span>
+      </div>
+    </a>
+
+    <a href="#" class="mission-card">
+      <div class="mission-num">任务 02</div>
+      <div class="mission-diff">★★☆</div>
+      <div class="mission-name">马耳他训练场</div>
+      <div class="mission-desc">接受MI6全方位测试：格斗、射击、驾驶，通过即可领取临时特工身份。</div>
+      <div class="mission-tags">
+        <span class="tag action">战斗</span>
+        <span class="tag stealth">潜行</span>
+      </div>
+    </a>
+
+    <a href="#" class="mission-card">
+      <div class="mission-num">任务 03</div>
+      <div class="mission-diff">★★★</div>
+      <div class="mission-name">维也纳序曲</div>
+      <div class="mission-desc">化装潜入古典音乐会，接触线人并获取叛变特工009的最新情报。</div>
+      <div class="mission-tags">
+        <span class="tag stealth">潜行</span>
+        <span class="tag story">剧情</span>
+      </div>
+    </a>
+
+    <a href="#" class="mission-card">
+      <div class="mission-num">任务 04</div>
+      <div class="mission-diff">★★★</div>
+      <div class="mission-name">黑市交易</div>
+      <div class="mission-desc">前往伊斯坦布尔追查武器交易，多种渗透路线，首次遭遇重型警卫。</div>
+      <div class="mission-tags">
+        <span class="tag action">战斗</span>
+        <span class="tag stealth">潜行</span>
+      </div>
+    </a>
+
+    <a href="#" class="mission-card">
+      <div class="mission-num">任务 05</div>
+      <div class="mission-diff">★★★★</div>
+      <div class="mission-name">格林威博士</div>
+      <div class="mission-desc">追踪科技大亨背后的双面身份，瑞士雪山关卡含高难度飞车追逐段落。</div>
+      <div class="mission-tags">
+        <span class="tag action">战斗</span>
+        <span class="tag story">剧情</span>
+      </div>
+    </a>
+
+    <a href="#" class="mission-card">
+      <div class="mission-num">任务 06</div>
+      <div class="mission-diff">★★★</div>
+      <div class="mission-name">深水浮标</div>
+      <div class="mission-desc">水下潜入敌方基地，收集核心数据，注意氧气管理与警卫巡逻节点。</div>
+      <div class="mission-tags">
+        <span class="tag stealth">潜行</span>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- TIPS -->
+<div class="section" id="tips">
+  <div class="section-header">
+    <h2 class="section-title">实战 <span>技巧</span></h2>
+  </div>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">🤫</div>
+      <div class="tip-title">优先选择潜行路线</div>
+      <div class="tip-body">大多数关卡潜行通关可解锁隐藏成就。利用角落掩体和 Q 提供的迷惑弹道具，可大幅降低被发现概率。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">💬</div>
+      <div class="tip-title">善用「搭讪」伪装</div>
+      <div class="tip-body">遇到询问哨卡时，先观察周边 NPC 对话内容，选择符合场景的选项通过率更高，失败后仍可重试一次。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔧</div>
+      <div class="tip-title">Q 的道具别存着</div>
+      <div class="tip-body">很多玩家把道具攒到最后，其实关卡结束会刷新道具库。遇到多警卫区域果断用磁波干扰器，省时省力。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🎯</div>
+      <div class="tip-title">格斗连招节奏感</div>
+      <div class="tip-body">游戏格斗存在"黄金节拍窗口"：在敌人攻击动画最后帧反击可触发精准格挡，打出额外击晕效果。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🗺️</div>
+      <div class="tip-title">环境道具是关键</div>
+      <div class="tip-body">场景内的花盆、报纸、打翻的饮料都能作为干扰道具。制造声响吸引单个警卫，再逐一清除效率最高。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📸</div>
+      <div class="tip-title">收集品不要回头找</div>
+      <div class="tip-body">每关至多3个情报文件，建议边玩边用相机模式扫描书桌抽屉。通关后虽可重玩章节，但需重新触发全部条件。</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="logo">
+      <div class="logo-badge">007</div>
+      <span class="logo-text">First Light · 攻略站</span>
+    </div>
+    <div class="footer-note">
+      本站为同人攻略站，与 IO Interactive 及官方无关。<br>
+      游戏版权归 <a href="#">IO Interactive</a> 所有。
+    </div>
+    <div style="font-size:12px;color:var(--muted)">
+      持续更新中 · 如有错误欢迎反馈
+    </div>
+  </div>
+</footer>
+
+<!-- SEARCH OVERLAY -->
+<div id="search-overlay">
+  <button class="search-close" onclick="closeSearch()">✕</button>
+  <div class="search-box">
+    <div class="search-input-wrap">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="搜索任务、成就、武器…" oninput="handleSearch(this.value)">
+    </div>
+    <div class="search-results-label">快速跳转</div>
+    <div id="searchResults">
+      <a href="#" class="search-result-item"><span class="sr-icon">📋</span><span class="sr-name">维也纳序曲 —— 任务 03 攻略</span><span class="sr-type">任务</span></a>
+      <a href="#" class="search-result-item"><span class="sr-icon">🏆</span><span class="sr-name">影子特工 —— 全程不惊动成就</span><span class="sr-type">成就</span></a>
+      <a href="#" class="search-result-item"><span class="sr-icon">🔫</span><span class="sr-name">PPK 手枪 —— 升级路线</span><span class="sr-type">武器</span></a>
+      <a href="#" class="search-result-item"><span class="sr-icon">👾</span><span class="sr-name">009 终章 Boss 战详解</span><span class="sr-type">Boss</span></a>
+      <a href="#" class="search-result-item"><span class="sr-icon">📦</span><span class="sr-name">全关卡收集品位置汇总</span><span class="sr-type">收集</span></a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const el = document.getElementById('progressBar');
+    const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    el.style.width = scrolled + '%';
+  });
+
+  // Search
+  function openSearch() {
+    document.getElementById('search-overlay').classList.add('open');
+    setTimeout(() => document.getElementById('searchInput').focus(), 50);
+  }
+
+  function closeSearch() {
+    document.getElementById('search-overlay').classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeSearch();
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
+  });
+
+  // Quick nav highlight
+  document.querySelectorAll('.qnav-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelectorAll('.qnav-item').forEach(i => i.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Nav active on scroll
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
